@@ -3,6 +3,7 @@ import { RiCloseLine, RiDraggable, RiPencilFill } from "@remixicon/react";
 import Select from "react-select";
 import { PRIMARY_COLOR } from "../helper.js";
 import Modal from "../Modal/index.js";
+import ProductPicker from "../ProductPicker.js/index.js";
 const customStyles = {
   control: (base, state) => ({
     ...base,
@@ -60,7 +61,9 @@ const Row = (props) => {
         {removable ? (
           <RiCloseLine className="cursor-pointer close-btn" />
         ) : null}
-        <Modal isOpen={isOpen} onClose={closeModal} />
+        <Modal isOpen={isOpen} onClose={closeModal}>
+          <ProductPicker />
+        </Modal>
       </div>
     </div>
   );

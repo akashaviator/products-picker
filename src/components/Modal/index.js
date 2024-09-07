@@ -1,15 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { Children, useState } from "react";
 import "./styles.css";
 import "../../App.css";
 import { RiCloseLine, RiSearchLine } from "@remixicon/react";
-import axios from "axios";
-import PickerList from "../PickerList";
+import ProductPicker from "../ProductPicker.js";
 
-const LIMIT = 25;
-
-const Modal = ({ isOpen, onClose }) => {
+const Modal = ({ children, isOpen, onClose }) => {
   const [products, setProducts] = useState([]);
-  const [error, setError] = useState(null);
 
   return (
     isOpen && (
@@ -29,7 +25,7 @@ const Modal = ({ isOpen, onClose }) => {
                 <RiSearchLine size={20} className="search-icon" />
               </div>
             </div>
-            <PickerList products={products} />
+            {children}
           </div>
           <div className="modal__footer">
             <span className="font15">4 items selected</span>
