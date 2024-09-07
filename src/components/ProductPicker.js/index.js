@@ -1,16 +1,15 @@
 import React, { useState, useEffect, useRef, useReducer } from "react";
 import "./styles.css";
 import "../../App.css";
-import axios from "axios";
 import APIError from "../APIError";
 import PickerItem from "./PickerItem";
 import { pickerReducer } from "./reducer";
 import { fetchProducts } from "../helper";
+import { RiSearchLine } from "@remixicon/react";
 
 const ProductPicker = (props) => {
   const { search = "" } = props;
   const [selectedState, dispatch] = useReducer(pickerReducer, []);
-  const [selectedProducts, setSelectedProducts] = useState([]);
   const [products, setProducts] = useState([]);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -46,22 +45,34 @@ const ProductPicker = (props) => {
     return () => observer.disconnect();
   }, []);
 
+  // useEffect(() => {
+  //   console.log("selected state", selectedState);
+  // }, [selectedState]);
+
   return (
-    <div ref={containerRef} className="picker-list custom-scrollbar font14">
-      {error || (
-        <ul>
-          {products.map((product, index) => (
-            <PickerItem
-              key={product.id}
-              product={product}
-              selectedProducts={selectedProducts}
-              setSelectedProducts={setSelectedProducts}
-            />
-          ))}
-          <li ref={loaderRef}>Loading</li>
-        </ul>
-      )}
-    </div>
+    <React.Fragment>
+      <div className="search__row">
+        <div className="search__input">
+          <input placeholder="Search Product" />
+          <RiSearchLine size={20} className="search-icon" />
+        </div>
+      </div>
+      <div ref={containerRef} className="picker-list custom-scrollbar font14">
+        {error || (
+          <ul>
+            {products.map((product, index) => (
+              <PickerItem
+                key={product.id}
+                product={product}
+                dispatch={dispatch}
+                selectedState={selectedState}
+              />
+            ))}
+            <li ref={loaderRef}>Loading...</li>
+          </ul>
+        )}
+      </div>
+    </React.Fragment>
   );
 };
 

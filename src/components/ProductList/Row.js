@@ -18,11 +18,7 @@ const customStyles = {
   }),
 };
 const Row = (props) => {
-  const { variant = "parent", removable = true } = props;
-  const [isOpen, setIsOpen] = useState(true);
-
-  const openModal = () => setIsOpen(true);
-  const closeModal = () => setIsOpen(false);
+  const { variant = "parent", removable = true, openModal } = props;
 
   const options = [
     { value: "chocolate", label: "Chocolate" },
@@ -61,9 +57,9 @@ const Row = (props) => {
         {removable ? (
           <RiCloseLine className="cursor-pointer close-btn" />
         ) : null}
-        <Modal isOpen={isOpen} onClose={closeModal}>
+        {/* <Modal isOpen={isOpen} onClose={closeModal}>
           <ProductPicker />
-        </Modal>
+        </Modal> */}
       </div>
     </div>
   );

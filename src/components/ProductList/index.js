@@ -1,7 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import Row from "./Row";
+import Modal from "../Modal";
+import ProductPicker from "../ProductPicker.js";
 
 const ProductList = () => {
+  const [showModal, setShowModal] = useState(true);
+
+  const openModal = () => setShowModal(true);
+  const closeModal = () => setShowModal(false);
+
   return (
     <div className="product-list">
       <span className="header">Add Products</span>
@@ -11,9 +18,14 @@ const ProductList = () => {
           <span>Discount</span>
         </span>
         <span>
-          <Row />
+          <Row openModal={openModal} />
         </span>
       </div>
+      {showModal ? (
+        <Modal onClose={closeModal}>
+          <ProductPicker />
+        </Modal>
+      ) : null}
     </div>
   );
 };

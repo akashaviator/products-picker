@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import "./styles.css";
 import "../../App.css";
 import CheckBox from "../CheckBox";
@@ -7,64 +7,68 @@ import VariantRow from "./VariantRow";
 import _ from "underscore";
 
 const PickerItem = (props) => {
-  const { product, selectedProducts, setSelectedProducts } = props;
+  const { product, isSelected = false, dispatch, selectedState } = props;
+  const [selectAllVariants, setSelectAllVariants] = useState(false);
   const variantsCount = Math.abs(product.variants.length);
   const hasMultipleVariants = variantsCount > 1;
 
-  const updatePicker = (variantId, shouldRemove = false) => {
-    console.log(variantId, shouldRemove);
-    const isProductSelected = selectedProducts.find(
-      (item) => item.id === product.id
-    );
-    console.log(selectedProducts, product.id, isProductSelected);
-    if (isProductSelected) {
-      if (shouldRemove) {
-        const products = _.filter(
-          selectedProducts,
-          (picked) => picked.id === product.id
-        );
-        const variants = product.variants.filter(
-          (item) => item.id === variantId
-        );
+  // const addVariant = useCallback((variant) => {
+  //   dispatch({ type: "VARIANT/ADD", payload: { variant, product } });
+  // }, []);
 
-        const updatedProduct = _.omit(product, "variants");
-        updatedProduct.variants = variants;
-        setSelectedProducts([...products, updatedProduct]);
-      } else {
-        const products = _.filter(
-          selectedProducts,
-          (picked) => picked.id !== product.id
-        );
-        const selectedProductIndex = _.findIndex(
-          selectedProducts,
-          (item) => item.id === product.id
-        );
-        const selectedProduct = _.clone(selectedProducts[selectedProductIndex]);
-        const variantToAdd = product.variants.find(
-          (item) => item.id === variantId
-        );
-        selectedProduct.variants.push(variantToAdd);
-        products.splice(selectedProductIndex, 0, selectedProduct);
-        setSelectedProducts([...products]);
-      }
-    } else {
-      const newSelected = _.omit(product, "variants");
-      const variantToAdd = product.variants.find(
-        (item) => item.id === variantId
-      );
-      newSelected.variants = [variantToAdd];
-      setSelectedProducts([...selectedProducts, newSelected]);
-    }
+  // const removeVariant = useCallback((variant) => {
+  //   dispatch({ type: "VARIANT/REMOVE", payload: { variant, product } });
+  // }, []);
+  // const addProduct = useCallback(() => {
+  //   dispatch({ type: "PRODUCT/ADD", payload: { product } });
+  //   setSelectAllVariants(true);
+  // }, []);
+  // const removeProduct = useCallback(() => {
+  //   dispatch({ type: "PRODUCT/REMOVE", payload: { product } });
+  //   setSelectAllVariants(false);
+  // }, []);
+
+  const addVariant = (variant) => {
+    dispatch({ type: "VARIANT/ADD", payload: { variant, product } });
   };
 
-  useEffect(() => {
-    console.log(selectedProducts);
-  }, [selectedProducts]);
+  const removeVariant = useCallback((variant) => {
+    dispatch({ type: "VARIANT/REMOVE", payload: { variant, product } });
+  }, []);
+  const addProduct = () => {
+    dispatch({ type: "PRODUCT/ADD", payload: { product } });
+    setSelectAllVariants(true);
+  };
+  const removeProduct = useCallback(() => {
+    dispatch({ type: "PRODUCT/REMOVE", payload: { product } });
+    setSelectAllVariants(false);
+  }, []);
+  const allVariantsSelected = useMemo(() => {
+    const selected = _.find(
+      selectedState,
+      (selectedProduct) => selectedProduct.id === product.id
+    );
+    const allSelected =
+      selected && selected.variants.length === product.variants.length;
+    if (allSelected) setSelectAllVariants(true);
+    return allSelected;
+  }, [selectedState]);
 
   return (
     <React.Fragment>
       <li className="picker__item" style={{ height: "50px" }}>
-        <CheckBox size={22} color={PRIMARY_COLOR} className="ml-2" />
+        <CheckBox
+          size={22}
+          color={PRIMARY_COLOR}
+          className="ml-2"
+          onCheck={addProduct}
+          onUncheck={removeProduct}
+          isChecked={allVariantsSelected}
+          partialSelected={_.some(
+            selectedState,
+            (item) => item.id === product.id
+          )}
+        />
         <img
           className="item__thumbnail ml-1 mr-1"
           src={product.image.src || placeholderImgUrl}
@@ -81,14 +85,13 @@ const PickerItem = (props) => {
           ) : null} */}
         </div>
       </li>
-      {/* {hasMultipleVariants
-        ? product.variants.map((variant, i) => <VariantRow variant={variant} />)
-        : null} */}
       {product.variants.map((variant, i) => (
         <VariantRow
           key={variant.id}
           variant={variant}
-          updatePicker={updatePicker}
+          addVariant={addVariant}
+          removeVariant={removeVariant}
+          isSelected={selectAllVariants}
         />
       ))}
     </React.Fragment>

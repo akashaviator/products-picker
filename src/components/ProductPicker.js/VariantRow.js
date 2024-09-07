@@ -1,9 +1,9 @@
-import React from "react";
+import React, { useMemo } from "react";
 import CheckBox from "../CheckBox";
 import { PRIMARY_COLOR } from "../helper";
 
 const VariantRow = (props) => {
-  const { variant, updatePicker } = props;
+  const { variant, removeVariant, addVariant, isSelected } = props;
 
   return (
     <li className="picker__item variant">
@@ -11,8 +11,9 @@ const VariantRow = (props) => {
         size={22}
         color={PRIMARY_COLOR}
         className="ml-5"
-        onCheck={() => updatePicker(variant.id)}
-        onUncheck={() => updatePicker(variant.id, true)}
+        onCheck={() => addVariant(variant)}
+        onUncheck={() => removeVariant(variant)}
+        isChecked={isSelected}
       />
       <div
         className="variant__row ml-1"
