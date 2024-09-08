@@ -29,7 +29,6 @@ const Row = (props) => {
   return (
     <React.Fragment>
       <div className={`list-row ${variant && "child"}`}>
-        <RiDraggable size={20} color="gray" className="cursor-pointer" />
         <div className="details" style={{ display: "flex" }}>
           {variant ? null : (
             <span className="index" style={{ width: "40px" }}>
