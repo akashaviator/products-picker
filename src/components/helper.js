@@ -22,3 +22,4 @@ export const fetchProductsAPI = (page = 1, search, limit = 10) => {
       .catch((err) => reject(err))
   })
 }
+export const EMPTY_PRODUCT = { id: `${new Date()}`, variants: [] }

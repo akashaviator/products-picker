@@ -6,13 +6,15 @@ import "./styles.css"
 import "../../App.css"
 import MovableList from "../MovableList/index.js"
 import { arrayMove } from "react-movable"
-import { listReducer } from "./listReducer.js"
+import { listReducer } from "./reducer.js"
 import Button from "../Button.js"
+import { EMPTY_PRODUCT } from "../helper.js"
 
 const ProductList = () => {
   const [showModal, setShowModal] = useState(false)
-  const [productList, dispatch] = useReducer(listReducer, [])
+  const [productList, dispatch] = useReducer(listReducer, [EMPTY_PRODUCT])
   const [container, setContainer] = useState(null)
+
   const wrapperRef = useRef(null)
   const rowIndexEdited = useRef(null)
 
@@ -41,6 +43,7 @@ const ProductList = () => {
         dispatch={dispatch}
         product={product}
         openModal={() => {
+          console.log(index, "index")
           rowIndexEdited.current = index
           openModal()
         }}
@@ -87,6 +90,9 @@ const ProductList = () => {
           type="secondary"
           text="Add Product"
           style={{ padding: "10px 40px" }}
+          onClick={() => {
+            handleAddProducts([EMPTY_PRODUCT])
+          }}
         />
       </div>
     </div>

@@ -93,12 +93,12 @@ const Row = (props) => {
         </div>
       </div>
 
-      {product && product.variants.length && (
+      {product && product.variants.length ? (
         <VariantList
           variants={product.variants}
           handleMovedVariant={handleMovedVariant}
         />
-      )}
+      ) : null}
     </div>
   )
 }

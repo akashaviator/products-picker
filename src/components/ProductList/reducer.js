@@ -14,11 +14,12 @@ export const listReducer = (state, action) => {
     action.payload
   console.log(index, "index")
   let newState = null
-  const isStateEmpty = !index
+  const isStateEmpty = _.isNull(index)
+  const addEmptyProduct = _.isEmpty(products[0].variants)
   switch (action.type) {
     case "PRODUCTS/ADD":
-      if (isStateEmpty) {
-        newState = [...products]
+      if (isStateEmpty || addEmptyProduct) {
+        newState = [...state, ...products]
       } else {
         let productsToAdd = []
         const productsPresent = [...state]
@@ -44,7 +45,13 @@ export const listReducer = (state, action) => {
         if (productsPresent.length === index) {
           newState = productsPresent.concat(productsToAdd)
         } else {
-          productsPresent.splice(index, 0, ...productsToAdd)
+          console.log("putting in", productsPresent[index])
+          const isEmptyProduct = _.isEmpty(productsPresent[index].variants)
+          productsPresent.splice(
+            index,
+            isEmptyProduct ? 1 : 0,
+            ...productsToAdd
+          )
           newState = productsPresent
         }
       }
@@ -61,6 +68,8 @@ export const listReducer = (state, action) => {
       productsPresent[index].variants = variants
       newState = productsPresent
       break
+    default:
+      return newState
   }
 
   return newState
