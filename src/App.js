@@ -1,6 +1,6 @@
-import "./App.css";
-import ProductList from "./components/ProductList";
-import Logo from "./logo.svg";
+import "./App.css"
+import ProductList from "./components/ProductList"
+import Logo from "./logo.svg"
 
 function App() {
   return (
@@ -13,7 +13,7 @@ function App() {
         <ProductList />
       </div>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

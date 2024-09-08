@@ -1,4 +1,4 @@
-import React from "react";
+import React from "react"
 
 const APIError = () => {
   return (
@@ -16,7 +16,7 @@ const APIError = () => {
     >
       Some error occurred at out end. Please contact support.
     </div>
-  );
-};
+  )
+}
 
-export default APIError;
+export default APIError

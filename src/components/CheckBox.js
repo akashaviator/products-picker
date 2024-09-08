@@ -2,8 +2,8 @@ import {
   RiCheckboxBlankLine,
   RiCheckboxFill,
   RiCheckboxIndeterminateFill,
-} from "@remixicon/react";
-import React, { useEffect, useState } from "react";
+} from "@remixicon/react"
+import React, { useEffect, useState } from "react"
 
 const CheckBox = (props) => {
   const {
@@ -14,31 +14,31 @@ const CheckBox = (props) => {
     size,
     partialSelected,
     className = "",
-  } = props;
-  const [checked, setChecked] = useState(false);
+  } = props
+  const [checked, setChecked] = useState(false)
 
   const onClick = () => {
     if (!checked && onCheck) {
-      onCheck();
+      onCheck()
     } else if (checked && onUncheck) {
-      onUncheck();
+      onUncheck()
     }
-    setChecked(!checked);
-  };
+    setChecked(!checked)
+  }
 
   const renderCheckedState = () => {
-    let icon = <RiCheckboxBlankLine color="gray" size={size} />;
+    let icon = <RiCheckboxBlankLine color="gray" size={size} />
     if (checked) {
-      icon = <RiCheckboxFill color={color} size={size} />;
+      icon = <RiCheckboxFill color={color} size={size} />
     } else if (partialSelected) {
-      icon = <RiCheckboxIndeterminateFill color={color} size={size} />;
+      icon = <RiCheckboxIndeterminateFill color={color} size={size} />
     }
-    return icon;
-  };
+    return icon
+  }
 
   useEffect(() => {
-    setChecked(isChecked);
-  }, [isChecked]);
+    setChecked(isChecked)
+  }, [isChecked])
 
   return (
     <span
@@ -48,7 +48,7 @@ const CheckBox = (props) => {
     >
       {renderCheckedState()}
     </span>
-  );
-};
+  )
+}
 
-export default CheckBox;
+export default CheckBox

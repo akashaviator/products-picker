@@ -1,0 +1,116 @@
+.close-btn {
+  color: gray;
+}
+.close-btn:hover {
+  color: black;
+}
+
+.list-container {
+  margin-top: 50px;
+  width: 80%;
+}
+
+.list-container .list-header {
+  display: grid;
+  grid-template-columns: 270px 250px;
+  margin-left: 100px;
+}
+
+.list-header span {
+  font-weight: 500;
+  padding-bottom: 5px;
+}
+
+.list-row {
+  display: flex;
+  padding: 10px;
+  align-items: center;
+}
+.list-row .details {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.item-select {
+  position: relative;
+  display: flex;
+  align-items: center;
+  box-shadow: 0px 2px 4px rgb(0, 0, 0, 0.1);
+  width: 250px;
+  height: 38px;
+  border-radius: 4px;
+}
+
+.item-select input {
+  padding-left: 15px;
+  height: 100%;
+  width: 100%;
+  border: 2px solid #ededed;
+  border-radius: 4px;
+  box-sizing: border-box;
+  outline: none;
+}
+.item-select .edit-btn {
+  position: absolute;
+  right: 0px;
+  width: 30px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0px 4px 4px 0px;
+  padding-right: 5px;
+  padding-left: 5px;
+}
+.item-select .edit-btn:hover {
+  background-color: rgb(233, 233, 233);
+}
+
+.discount {
+  box-shadow: 0px 2px 4px rgb(0, 0, 0, 0.1);
+  width: 100px;
+  height: 38px;
+  border: 2px solid #ededed;
+  outline: none;
+  padding-left: 15px;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+.react-select__control {
+  box-shadow: 0px 2px 4px rgb(0, 0, 0, 0.1);
+  border-width: 2px;
+  border-style: solid;
+  border-color: #ededed;
+}
+
+.highlight:hover {
+  border: 2px solid #007555;
+}
+.product-list {
+  width: 800px;
+  margin-top: 80px;
+  margin-bottom: 50px;
+}
+.list-row .index {
+  font-size: 16px;
+  font-weight: 500;
+  width: 40px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.list-row.child .react-select__control,
+.list-row.child .discount,
+.list-row.child .item-select,
+.list-row.child .item-select input {
+  border-radius: 18px !important;
+}
+.list-row.child .item-select {
+  width: 190px;
+}
+.list-row.child .edit-btn {
+  display: none;
+}
+.list-row.child {
+  padding-left: 125px;
+}

@@ -24,135 +24,48 @@
   height: 40px;
 }
 
-.product-list {
-  width: 800px;
-  margin-top: 80px;
-}
-
 .app-content {
   display: flex;
   justify-content: center;
-  height: calc(100vh - 55px);
+  min-height: 100vh;
+  height: fit-content;
 }
 .app-content .header {
   font-size: 20px;
   font-weight: 600;
 }
 
-.list-container {
-  margin-top: 50px;
-  width: 80%;
-}
-
-.list-container .list-header {
-  display: grid;
-  grid: 20px / repeat(2, 1fr);
-  margin-left: 85px;
-}
-
-.list-header span {
-  padding-left: 40px;
-  font-weight: 500;
-}
-
-.list-row {
-  display: flex;
-  padding: 10px;
-  align-items: center;
-}
-.list-row .details {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-.item-select {
-  position: relative;
-  display: flex;
-  align-items: center;
-  box-shadow: 0px 2px 4px rgb(0, 0, 0, 0.1);
-  width: 250px;
-  height: 38px;
-  border-radius: 4px;
-}
-
-.item-select input {
-  padding-left: 15px;
-  height: 100%;
-  width: 100%;
-  border: 2px solid #ededed;
-  border-radius: 4px;
-  box-sizing: border-box;
-  outline: none;
-}
-.item-select .edit-btn {
-  position: absolute;
-  right: 0px;
-  width: 30px;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 0px 4px 4px 0px;
-  padding-right: 5px;
-  padding-left: 5px;
-}
-.item-select .edit-btn:hover {
-  background-color: rgb(233, 233, 233);
-}
-
-.discount {
-  box-shadow: 0px 2px 4px rgb(0, 0, 0, 0.1);
-  width: 100px;
-  height: 38px;
-  border: 2px solid #ededed;
-  outline: none;
-  padding-left: 15px;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-.react-select__control {
-  box-shadow: 0px 2px 4px rgb(0, 0, 0, 0.1);
-  border-width: 2px;
-  border-style: solid;
-  border-color: #ededed;
-}
-
-.highlight:hover {
-  border: 2px solid #007555;
-}
 .cursor-pointer {
   cursor: pointer;
 }
-.close-btn {
-  color: gray;
-}
-.close-btn:hover {
-  color: black;
-}
 
-.child .react-select__control,
-.child .discount,
-.child .item-select,
-.child .item-select input {
-  border-radius: 18px !important;
-}
-.child .item-select {
-  width: 190px;
-}
-.child .edit-btn {
-  display: none;
-}
+.btn-default {
+  box-sizing: border-box;
+  display: inline-block;
+  padding: 5px 20px;
+  /* background: var(--primary-color); */
+  color: #666666;
+  font-weight: 500;
+  border-radius: 3px;
+  cursor: pointer;
+  border: 1px solid #999999;
 
+  transition: transform 0.1s ease, background-color 0.2s ease;
+}
+.btn-default:active {
+  transform: scale(0.98);
+  background: #e5e5e5;
+}
 .btn-primary {
   box-sizing: border-box;
   display: inline-block;
-  padding: 5px 10px;
+  padding: 5px 20px;
   background: var(--primary-color);
   color: white;
   font-weight: 500;
   border-radius: 3px;
   cursor: pointer;
-  border: 1.5px solid var(--primary-color);
+  border: 1px solid var(--primary-color);
 
   transition: transform 0.1s ease, background-color 0.2s ease;
 }
@@ -191,7 +104,11 @@
 .ml-5 {
   margin-left: 50px;
 }
-
+.disabled {
+  pointer-events: none;
+  opacity: 0.8;
+  color: gray;
+}
 .custom-scrollbar {
   /* width: 3dfsdf00px; */
   height: 100%; /* Fixed height to enable scrolling */
@@ -213,4 +130,17 @@
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #0056b3; /* Darker color on hover */
+}
+.loader {
+  display: inline-block; /* Ensure it behaves like an inline element */
+  animation: spin 1s linear infinite; /* Apply the spin animation */
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg); /* Start at 0 degrees */
+  }
+  100% {
+    transform: rotate(360deg); /* Rotate to 360 degrees */
+  }
 }

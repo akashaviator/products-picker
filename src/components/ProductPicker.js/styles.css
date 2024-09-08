@@ -19,10 +19,6 @@
   height: 28px;
   border-radius: 3px;
 }
-.picker__item .product__title {
-  /* font-size: 14px;
-  font-weight: 400; */
-}
 .variant__row {
   display: flex;
   align-items: center;
@@ -39,4 +35,7 @@
   justify-content: space-between;
   width: 100%;
   margin-right: 30px;
+}
+.picker__item:hover {
+  background: rgb(242, 242, 242);
 }

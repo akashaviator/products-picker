@@ -1,12 +1,12 @@
-import React, { useMemo } from "react";
-import CheckBox from "../CheckBox";
-import { PRIMARY_COLOR } from "../helper";
+import React, { useMemo } from "react"
+import CheckBox from "../CheckBox"
+import { PRIMARY_COLOR } from "../helper"
 
 const VariantRow = (props) => {
-  const { variant, removeVariant, addVariant, isSelected } = props;
+  const { variant, removeVariant, addVariant, isSelected, isDisabled } = props
 
   return (
-    <li className="picker__item variant">
+    <li className={`picker__item variant ${isDisabled && "disabled"}`}>
       <CheckBox
         size={22}
         color={PRIMARY_COLOR}
@@ -24,10 +24,13 @@ const VariantRow = (props) => {
           <span>
             {`${Math.abs(variant.inventory_quantity) || "0"} available`}
           </span>
+          <span style={{ marginLeft: "40px" }}>{`$${
+            Math.abs(variant.price) || "0"
+          }`}</span>
         </span>
       </div>
     </li>
-  );
-};
+  )
+}
 
-export default VariantRow;
+export default VariantRow
