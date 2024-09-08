@@ -1,9 +1,3 @@
-.movable__item {
-  /* display: flex;
-  position: relative;
-  align-items: center;
-  flex-direction: column; */
-}
 .drag__handle {
   position: absolute;
   left: 0px;

@@ -105,7 +105,7 @@ const ProductPicker = (props) => {
         <div className="search__input">
           <input
             placeholder="Search Product"
-            value={search}
+            value={search || ""}
             onChange={(e) => setSearch(e.target.value)}
           />
           <RiSearchLine size={20} className="search-icon" />

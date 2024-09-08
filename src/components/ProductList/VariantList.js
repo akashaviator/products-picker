@@ -4,13 +4,12 @@ import { RiArrowDownSLine, RiArrowUpSLine } from "@remixicon/react"
 import MovableList from "../MovableList"
 
 const VariantList = (props) => {
-  const { variants } = props
-  const [showVarients, setShowVariants] = useState(true)
+  const { variants, handleMovedVariant } = props
+  const [showVarients, setShowVariants] = useState(false)
   const [container, setContainer] = useState(null)
   const wrapperRef = useRef(null)
 
   const renderVariant = (variant) => <Row variant={variant} />
-  const handleMovedVariant = () => {}
 
   useEffect(() => setContainer(wrapperRef.current), [])
 
