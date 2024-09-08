@@ -44,7 +44,7 @@ const Row = (props) => {
       payload: { index, variants: newOrder },
     })
   }
-  // const removeVariant = ()
+
   return (
     <div className={`row ${product ? "product" : "variant"}`}>
       <div className={`list-row ${variant && "child"}`}>
@@ -78,12 +78,6 @@ const Row = (props) => {
               />
             </React.Fragment>
           ) : (
-            // <span
-            //   className="ml-3 btn-primary"
-            //   onClick={() => setEditDiscount(!editDiscount)}
-            // >
-            //   Add Discount
-            // </span>
             <Button
               text="Add Discount"
               className="ml-3"

@@ -1,19 +1,34 @@
-import React, { useMemo } from "react"
+import React, { useEffect, useState } from "react"
 import CheckBox from "../CheckBox"
 import { PRIMARY_COLOR } from "../helper"
 
 const VariantRow = (props) => {
   const { variant, removeVariant, addVariant, isSelected, isDisabled } = props
+  const [checked, setChecked] = useState(false)
+  const onClick = () => {
+    if (!checked) {
+      addVariant(variant)
+    } else if (checked) {
+      removeVariant(variant)
+    }
+    setChecked(!checked)
+  }
+  useEffect(() => {
+    setChecked(isSelected)
+  }, [isSelected])
 
   return (
-    <li className={`picker__item variant ${isDisabled && "disabled"}`}>
+    <li
+      className={`picker__item variant cursor-pointer ${
+        isDisabled && "disabled"
+      }`}
+      onClick={onClick}
+    >
       <CheckBox
         size={22}
         color={PRIMARY_COLOR}
         className="ml-5"
-        onCheck={() => addVariant(variant)}
-        onUncheck={() => removeVariant(variant)}
-        isChecked={isSelected}
+        isChecked={checked}
       />
       <div
         className="variant__row ml-1"

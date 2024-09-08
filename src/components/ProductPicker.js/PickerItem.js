@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from "react"
+import React, { useCallback, useEffect, useMemo, useState } from "react"
 import "./styles.css"
 import "../../App.css"
 import CheckBox from "../CheckBox"
@@ -8,21 +8,48 @@ import _ from "underscore"
 
 const PickerItem = (props) => {
   const { product, dispatch, selectedState } = props
-  const [selectAllVariants, setSelectAllVariants] = useState(false)
+  const [checked, setChecked] = useState(false)
 
+  const onClick = () => {
+    if (!checked) {
+      addProduct()
+    } else if (checked) {
+      removeProduct()
+    }
+    setChecked(!checked)
+  }
   const allVariantsSelected = useMemo(() => {
     const selected = _.find(
       selectedState,
       (selectedProduct) => selectedProduct.id === product.id
     )
-    const allSelected =
-      selected && selected.variants.length === product.variants.length
-    if (allSelected) setSelectAllVariants(true)
+    let allSelected = false
+    if (!selected) setChecked(false)
+    else {
+      allSelected =
+        selected && selected.variants.length === product.variants.length
+    }
+
     return allSelected
   }, [selectedState])
 
-  const isDisabled = useMemo(() =>
-    _.some(product.variants, (variant) => !variant.inventory_quantity)
+  // useEffect(() => {
+  //   const selected = _.find(
+  //     selectedState,
+  //     (selectedProduct) => selectedProduct.id === product.id
+  //   )
+  //   let status = false
+  //   if (selected) {
+  //     const allSelected = selected.variants.length === product.variants.length
+  //     if (allSelected) status = true
+  //   } else {
+  //     // status = false
+  //   }
+  //   setChecked(status)
+  // }, [selectedState])
+  const isDisabled = useMemo(
+    () => _.some(product.variants, (variant) => !variant.inventory_quantity),
+    []
   )
 
   const addVariant = useCallback((variant) => {
@@ -35,27 +62,26 @@ const PickerItem = (props) => {
 
   const addProduct = useCallback(() => {
     dispatch({ type: "PRODUCT/ADD", payload: { product } })
-    setSelectAllVariants(true)
+    setChecked(true)
   }, [])
 
   const removeProduct = useCallback(() => {
     dispatch({ type: "PRODUCT/REMOVE", payload: { product } })
-    setSelectAllVariants(false)
+    setChecked(false)
   }, [])
 
   return (
     <React.Fragment>
       <li
-        className={`picker__item ${isDisabled && "disabled"}`}
+        className={`picker__item cursor-pointer ${isDisabled && "disabled"}`}
         style={{ height: "50px" }}
+        onClick={onClick}
       >
         <CheckBox
           size={22}
           color={PRIMARY_COLOR}
           className="ml-2"
-          onCheck={addProduct}
-          onUncheck={removeProduct}
-          isChecked={allVariantsSelected}
+          isChecked={checked || allVariantsSelected}
           partialSelected={_.some(
             selectedState,
             (item) => item.id === product.id
@@ -76,7 +102,7 @@ const PickerItem = (props) => {
           variant={variant}
           addVariant={addVariant}
           removeVariant={removeVariant}
-          isSelected={selectAllVariants}
+          isSelected={checked}
           isDisabled={!variant.inventory_quantity}
         />
       ))}

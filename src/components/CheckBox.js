@@ -7,28 +7,28 @@ import React, { useEffect, useState } from "react"
 
 const CheckBox = (props) => {
   const {
-    onCheck,
-    onUncheck,
-    isChecked = false,
+    isChecked,
+    parentChecked = false,
     color,
     size,
     partialSelected,
     className = "",
   } = props
-  const [checked, setChecked] = useState(false)
 
-  const onClick = () => {
-    if (!checked && onCheck) {
-      onCheck()
-    } else if (checked && onUncheck) {
-      onUncheck()
-    }
-    setChecked(!checked)
-  }
+  const [checked, setChecked] = useState(isChecked)
+
+  // const onClick = () => {
+  //   if (!checked && onCheck) {
+  //     onCheck()
+  //   } else if (checked && onUncheck) {
+  //     onUncheck()
+  //   }
+  //   setChecked(!checked)
+  // }
 
   const renderCheckedState = () => {
     let icon = <RiCheckboxBlankLine color="gray" size={size} />
-    if (checked) {
+    if (isChecked) {
       icon = <RiCheckboxFill color={color} size={size} />
     } else if (partialSelected) {
       icon = <RiCheckboxIndeterminateFill color={color} size={size} />
@@ -37,12 +37,15 @@ const CheckBox = (props) => {
   }
 
   useEffect(() => {
+    setChecked(parentChecked)
+  }, [parentChecked])
+  useEffect(() => {
     setChecked(isChecked)
   }, [isChecked])
 
   return (
     <span
-      onClick={onClick}
+      // onClick={onClick}
       style={{ display: "flex", alignItems: "center" }}
       className={`checkbox cursor-pointer ${className}`}
     >
