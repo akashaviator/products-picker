@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react"
+import React, { useCallback, useMemo, useState } from "react"
 import "./styles.css"
 import "../../App.css"
 import CheckBox from "../CheckBox"
@@ -7,10 +7,8 @@ import VariantRow from "./VariantRow"
 import _ from "underscore"
 
 const PickerItem = (props) => {
-  const { product, isSelected = false, dispatch, selectedState } = props
+  const { product, dispatch, selectedState } = props
   const [selectAllVariants, setSelectAllVariants] = useState(false)
-  const variantsCount = Math.abs(product.variants.length)
-  const hasMultipleVariants = variantsCount > 1
 
   const allVariantsSelected = useMemo(() => {
     const selected = _.find(

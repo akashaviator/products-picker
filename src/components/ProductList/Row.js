@@ -1,14 +1,7 @@
-import React, { useEffect, useRef, useState } from "react"
-import {
-  RiArrowDownSLine,
-  RiArrowUpSLine,
-  RiCloseLine,
-  RiDraggable,
-  RiPencilFill,
-} from "@remixicon/react"
+import React, { useState } from "react"
+import { RiCloseLine, RiPencilFill } from "@remixicon/react"
 import Select from "react-select"
 import { PRIMARY_COLOR } from "../helper.js"
-import MovableList from "../MovableList/index.js"
 import VariantList from "./VariantList.js"
 
 const DISCOUNT_OPTIONS = [

@@ -4,11 +4,13 @@ export const PRIMARY_COLOR = "#007555"
 export const placeholderImgUrl =
   "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/681px-Placeholder_view_vector.svg.png"
 
-export const fetchProducts = (page = 1, search = "", limit = 10) => {
+export const fetchProductsAPI = (page = 1, search, limit = 10) => {
   return new Promise((resolve, reject) => {
     axios
       .get(
-        `https://stageapi.monkcommerce.app/task/products/search?search=${search}&page=${page}&limit=${limit}`,
+        `https://stageapi.monkcommerce.app/task/products/search?search=${
+          search || ""
+        }&page=${page}&limit=${limit}`,
         {
           headers: {
             "Content-Type": "application/json",

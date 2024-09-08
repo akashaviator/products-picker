@@ -1,18 +1,18 @@
-import React, { useState, useEffect, useRef, useReducer, useMemo } from "react"
 import "./styles.css"
 import "../../App.css"
+import React, { useState, useEffect, useRef, useReducer, useMemo } from "react"
+import { RiLoader4Line, RiSearchLine } from "@remixicon/react"
+import _ from "underscore"
 import APIError from "../APIError"
 import PickerItem from "./PickerItem"
 import { pickerReducer } from "./reducer"
-import { fetchProducts, PRIMARY_COLOR } from "../helper"
-import { RiLoader4Line, RiSearchLine } from "@remixicon/react"
-import _ from "underscore"
+import { fetchProductsAPI, PRIMARY_COLOR } from "../helper"
 import Loader from "../Loader"
 
 const ProductPicker = (props) => {
   const { onClose, onAdd } = props
   const [selectedState, dispatch] = useReducer(pickerReducer, [])
-  const [search, setSearch] = useState("")
+  const [search, setSearch] = useState(null)
   const [products, setProducts] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(null)
@@ -35,47 +35,10 @@ const ProductPicker = (props) => {
     onClose()
   }
 
-  const getProducts = (search, page) => {}
-  useEffect(() => {
-    const delayDebounceFn = setTimeout(() => {
-      if (hasMounted.current) {
-        console.log("running search")
-        setIsLoading(true)
-        setEndOfResult(false)
-        fetchProducts(1, search)
-          .then((res) => {
-            // console.log("res", res)
-            let hasMore
-            setProducts(res ? [...res] : [])
-            if (res && res.length === 10) {
-              hasMore = true
-            } else {
-              hasMore = false
-            }
-            setEndOfResult(!hasMore)
-          })
-          .catch((err) => {
-            setError(<APIError />)
-          })
-          .finally(() => {
-            setPage(1)
-
-            setIsLoading(false)
-          })
-      }
-    }, 500)
-
-    return () => clearTimeout(delayDebounceFn)
-  }, [search])
-
-  useEffect(() => {
-    console.log("running normal api")
-    fetchProducts(page, search)
+  const fetchProducts = (page, search, onSuccess, onFinally) => {
+    fetchProductsAPI(page, search)
       .then((res) => {
-        // console.log("res", res)
-        if (res) {
-          setProducts((prevData) => [...prevData, ...res])
-        }
+        onSuccess(res)
         let hasMore
         if (res && res.length === 10) {
           hasMore = true
@@ -87,22 +50,54 @@ const ProductPicker = (props) => {
       .catch((err) => {
         setError(<APIError />)
       })
+      .finally(() => {
+        if (onFinally) onFinally()
+      })
+  }
+  useEffect(() => {
+    const debounceId = setTimeout(() => {
+      const firstPage = 1
+
+      if (!_.isNull(search)) {
+        console.log("running search")
+        setIsLoading(true)
+        setEndOfResult(false)
+        fetchProducts(
+          firstPage,
+          search,
+          (res) => setProducts(res ? [...res] : []),
+          () => {
+            setPage(firstPage)
+            setIsLoading(false)
+          }
+        )
+      } else {
+        hasMounted.current = true
+      }
+    }, 500)
+
+    return () => clearTimeout(debounceId)
+  }, [search])
+
+  useEffect(() => {
+    console.log("running normal api")
+    fetchProducts(page, search, (res) => {
+      if (res) {
+        setProducts((prevData) => [...prevData, ...res])
+      }
+    })
   }, [page])
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        console.log(entries[0])
-        if (entries[0].isIntersecting && !isLoading && !endOfResult) {
-          if (hasMounted.current) setPage((prev) => prev + 1)
-          else hasMounted.current = true
-        }
-      },
-      { root: containerRef.current }
-    )
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting && !endOfResult) {
+        if (hasMounted.current) setPage((prev) => prev + 1)
+        else hasMounted.current = true
+      }
+    })
     if (loaderRef.current) observer.observe(loaderRef.current)
     return () => observer.disconnect()
-  }, [])
+  }, [products])
 
   return (
     <React.Fragment>
