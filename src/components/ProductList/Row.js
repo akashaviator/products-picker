@@ -4,6 +4,7 @@ import Select from "react-select"
 import { PRIMARY_COLOR } from "../helper.js"
 import VariantList from "./VariantList.js"
 import { arrayMove } from "react-movable"
+import Button from "../Button.js"
 
 const DISCOUNT_OPTIONS = [
   { value: "flat", label: "flat off" },
@@ -77,12 +78,19 @@ const Row = (props) => {
               />
             </React.Fragment>
           ) : (
-            <span
-              className="ml-3 btn-primary"
+            // <span
+            //   className="ml-3 btn-primary"
+            //   onClick={() => setEditDiscount(!editDiscount)}
+            // >
+            //   Add Discount
+            // </span>
+            <Button
+              text="Add Discount"
+              className="ml-3"
+              type="primary"
               onClick={() => setEditDiscount(!editDiscount)}
-            >
-              Add Discount
-            </span>
+              style={{ padding: "6px 26px" }}
+            />
           )}
 
           {removable ? (

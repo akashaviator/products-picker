@@ -42,10 +42,10 @@
 .btn-default {
   box-sizing: border-box;
   display: inline-block;
-  padding: 5px 20px;
+  padding: 5px 25px;
   /* background: var(--primary-color); */
   color: #666666;
-  font-weight: 500;
+  font-weight: 600;
   border-radius: 3px;
   cursor: pointer;
   border: 1px solid #999999;
@@ -59,10 +59,10 @@
 .btn-primary {
   box-sizing: border-box;
   display: inline-block;
-  padding: 5px 20px;
+  padding: 5px 25px;
   background: var(--primary-color);
   color: white;
-  font-weight: 500;
+  font-weight: 600;
   border-radius: 3px;
   cursor: pointer;
   border: 1px solid var(--primary-color);
@@ -76,14 +76,14 @@
 .btn-secondary {
   box-sizing: border-box;
   display: inline-block;
-  padding: 5px 10px;
+  padding: 5px 25px;
   background: white;
   color: var(--primary-color);
-  font-weight: 500;
+  font-weight: 600;
   border-radius: 3px;
   cursor: pointer;
   transition: transform 0.1s ease, background-color 0.2s ease;
-  border: 1.5px solid var(--primary-color);
+  border: 2px solid var(--primary-color);
 }
 .btn-secondary:active {
   transform: scale(0.99);

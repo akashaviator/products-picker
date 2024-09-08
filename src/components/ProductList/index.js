@@ -7,6 +7,7 @@ import "../../App.css"
 import MovableList from "../MovableList/index.js"
 import { arrayMove } from "react-movable"
 import { listReducer } from "./listReducer.js"
+import Button from "../Button.js"
 
 const ProductList = () => {
   const [showModal, setShowModal] = useState(false)
@@ -78,8 +79,15 @@ const ProductList = () => {
           <ProductPicker onClose={closeModal} onAdd={handleAddProducts} />
         </Modal>
       ) : null}
-      <div className="mt-2">
-        <span className="btn-secondary">Add Product</span>
+      <div
+        className="mt-2"
+        style={{ display: "flex", justifyContent: "center" }}
+      >
+        <Button
+          type="secondary"
+          text="Add Product"
+          style={{ padding: "10px 40px" }}
+        />
       </div>
     </div>
   )

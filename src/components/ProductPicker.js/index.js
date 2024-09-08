@@ -8,6 +8,7 @@ import PickerItem from "./PickerItem"
 import { pickerReducer } from "./reducer"
 import { fetchProductsAPI, PRIMARY_COLOR } from "../helper"
 import Loader from "../Loader"
+import Button from "../Button"
 
 const ProductPicker = (props) => {
   const { onClose, onAdd } = props
@@ -145,12 +146,19 @@ const ProductPicker = (props) => {
       <div className="modal__footer">
         <span className="ml-1 font15">{selectedItemsCount} items selected</span>
         <div>
-          <span className="btn-default font15" onClick={onClose}>
-            Cancel
-          </span>
-          <span className="btn-primary font15 ml-1" onClick={onClickAdd}>
-            Add
-          </span>
+          <Button
+            className="font15"
+            text="Cancel"
+            type="default"
+            onClick={onClose}
+          />
+
+          <Button
+            className="ml-1 font15"
+            text="Add"
+            type="primary"
+            onClick={onClickAdd}
+          />
         </div>
       </div>
     </React.Fragment>
