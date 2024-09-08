@@ -2,7 +2,7 @@ import { RiDraggable } from "@remixicon/react"
 import React from "react"
 
 const MovableListItem = React.forwardRef(
-  ({ value, isDragged, isSelected, renderItem, ...props }, ref) => {
+  ({ value, isDragged, isSelected, renderItem, index, ...props }, ref) => {
     return (
       <li
         key={value.id}
@@ -10,26 +10,19 @@ const MovableListItem = React.forwardRef(
         style={{
           ...props.style,
           listStyle: "none",
-          backgroundColor: isDragged || isSelected ? "#EEE" : "#FFF",
+          // backgroundColor: isDragged || isSelected ? "#EEE" : "#FFF",
           zIndex: isDragged ? 1 : undefined,
         }}
         ref={ref}
       >
         <div className="movable__item">
-          {/* <i
-            data-movable-handle
-            className="mdi mdi-drag-vertical drag-handle-icon font27"
-          /> */}
           <RiDraggable
             size={20}
             color="gray"
             className="cursor-pointer drag__handle"
             data-movable-handle
           />
-          {/* <span className="drag__handle cursor-pointer " data-movable-handle> */}
-          {/* Drag me
-          </span> */}
-          {renderItem(value)}
+          {renderItem(value, index)}
         </div>
       </li>
     )

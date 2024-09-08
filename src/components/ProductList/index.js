@@ -7,7 +7,7 @@ import "../../App.css"
 import MovableList from "../MovableList/index.js"
 
 const ProductList = () => {
-  const [showModal, setShowModal] = useState(true)
+  const [showModal, setShowModal] = useState(false)
   const [productList, setProductList] = useState([])
   const openModal = () => setShowModal(true)
   const closeModal = () => setShowModal(false)
@@ -18,13 +18,14 @@ const ProductList = () => {
     setProductList(addedProducts)
   }
 
-  const renderRow = (product) => {
+  const renderRow = (product, index) => {
     return (
       <Row
         product={product}
         openModal={() => {
           openModal()
         }}
+        index={index + 1}
       />
     )
   }

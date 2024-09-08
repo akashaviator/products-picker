@@ -6,14 +6,14 @@
 }
 
 .list-container {
-  margin-top: 50px;
   width: 80%;
 }
 
-.list-container .list-header {
+.product-list .list-header {
   display: grid;
   grid-template-columns: 270px 250px;
   margin-left: 100px;
+  margin-top: 50px;
 }
 
 .list-header span {
@@ -62,8 +62,14 @@
   padding-right: 5px;
   padding-left: 5px;
 }
+.edit-btn .edit__icon {
+  color: gray;
+}
 .item-select .edit-btn:hover {
   background-color: rgb(233, 233, 233);
+}
+.item-select .edit-btn:hover > .edit__icon {
+  color: var(--primary-color);
 }
 
 .discount {
@@ -112,5 +118,18 @@
   display: none;
 }
 .list-row.child {
-  padding-left: 125px;
+  padding-left: 40px;
+}
+.button__row {
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 91px;
+}
+.variants__list {
+  margin-left: 45px;
+}
+.row.product {
+  border-bottom: 1px solid #0000001a;
+  padding-bottom: 15px;
+  margin-bottom: 15px;
 }

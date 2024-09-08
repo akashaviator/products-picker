@@ -1,7 +1,15 @@
-import React, { useState } from "react"
-import { RiCloseLine, RiDraggable, RiPencilFill } from "@remixicon/react"
+import React, { useEffect, useRef, useState } from "react"
+import {
+  RiArrowDownSLine,
+  RiArrowUpSLine,
+  RiCloseLine,
+  RiDraggable,
+  RiPencilFill,
+} from "@remixicon/react"
 import Select from "react-select"
 import { PRIMARY_COLOR } from "../helper.js"
+import MovableList from "../MovableList/index.js"
+import VariantList from "./VariantList.js"
 
 const DISCOUNT_OPTIONS = [
   { value: "flat", label: "flat off" },
@@ -27,7 +35,7 @@ const Row = (props) => {
   const [discountType, setDiscountType] = useState(DISCOUNT_OPTIONS[0])
 
   return (
-    <React.Fragment>
+    <div className={`row ${product ? "product" : "variant"}`}>
       <div className={`list-row ${variant && "child"}`}>
         <div className="details" style={{ display: "flex" }}>
           {variant ? null : (
@@ -45,7 +53,7 @@ const Row = (props) => {
               className="edit-btn cursor-pointer"
               onClick={() => openModal()}
             >
-              <RiPencilFill size={20} color="#006f61" className="edit-icon" />
+              <RiPencilFill size={20} className="edit__icon" />
             </span>
           </span>
           {editDiscount ? (
@@ -75,9 +83,11 @@ const Row = (props) => {
           ) : null}
         </div>
       </div>
-      {product &&
-        product.variants.map((variant, i) => <Row variant={variant} />)}
-    </React.Fragment>
+
+      {product && product.variants.length && (
+        <VariantList variants={product.variants} />
+      )}
+    </div>
   )
 }
 

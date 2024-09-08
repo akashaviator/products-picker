@@ -89,6 +89,15 @@
   transform: scale(0.99);
   background: #f6f6f6;
 }
+.btn-link {
+  display: flex;
+  color: #006eff;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.btn-link:hover {
+  color: #0056c6;
+}
 .font15 {
   font-size: 15px;
 }
@@ -133,7 +142,7 @@
 }
 .loader {
   display: inline-block; /* Ensure it behaves like an inline element */
-  animation: spin 1s linear infinite; /* Apply the spin animation */
+  animation: spin 0.5s linear infinite; /* Apply the spin animation */
 }
 
 @keyframes spin {
