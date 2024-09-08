@@ -43,6 +43,7 @@ const Row = (props) => {
       payload: { index, variants: newOrder },
     })
   }
+  // const removeVariant = ()
   return (
     <div className={`row ${product ? "product" : "variant"}`}>
       <div className={`list-row ${variant && "child"}`}>

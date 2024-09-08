@@ -11,17 +11,25 @@ import { listReducer } from "./listReducer.js"
 const ProductList = () => {
   const [showModal, setShowModal] = useState(false)
   const [productList, dispatch] = useReducer(listReducer, [])
-
-  const openModal = () => setShowModal(true)
-  const closeModal = () => setShowModal(false)
   const [container, setContainer] = useState(null)
   const wrapperRef = useRef(null)
   const rowIndexEdited = useRef(null)
 
-  const handleAddProducts = (selectedProducts, index) => {
+  const openModal = () => setShowModal(true)
+  const closeModal = () => setShowModal(false)
+
+  const handleAddProducts = (selectedProducts) => {
     dispatch({
       type: "PRODUCTS/ADD",
       payload: { products: selectedProducts, index: rowIndexEdited.current },
+    })
+  }
+
+  const handleMovedRow = ({ oldIndex, newIndex }) => {
+    const newOrder = arrayMove(productList, oldIndex, newIndex)
+    dispatch({
+      type: "PRODUCTS/REORDER",
+      payload: { products: newOrder },
     })
   }
 
@@ -40,13 +48,6 @@ const ProductList = () => {
     )
   }
 
-  const handleMovedRow = ({ oldIndex, newIndex }) => {
-    const newOrder = arrayMove(productList, oldIndex, newIndex)
-    dispatch({
-      type: "PRODUCTS/REORDER",
-      payload: { products: newOrder },
-    })
-  }
   useEffect(() => {
     console.log(productList, "products list")
   }, [productList])
@@ -71,13 +72,15 @@ const ProductList = () => {
         ) : (
           <Row openModal={openModal} />
         )}
-        <span></span>
       </div>
       {showModal ? (
         <Modal onClose={closeModal}>
           <ProductPicker onClose={closeModal} onAdd={handleAddProducts} />
         </Modal>
       ) : null}
+      <div className="mt-2">
+        <span className="btn-secondary">Add Product</span>
+      </div>
     </div>
   )
 }

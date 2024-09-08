@@ -17,7 +17,7 @@ const VariantList = (props) => {
     <React.Fragment>
       <div className="button__row">
         <span
-          className="btn-link"
+          className="btn-link font14"
           onClick={() => setShowVariants(!showVarients)}
         >
           {showVarients ? (
