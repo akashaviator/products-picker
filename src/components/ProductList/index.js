@@ -1,20 +1,19 @@
 import React, { useEffect, useReducer, useRef, useState } from "react"
-import Row from "./Row"
+import Row from "./Row.js"
 import Modal from "../Modal"
-import ProductPicker from "../ProductPicker.js"
-import "./styles.css"
-import "../../App.css"
+import ProductPicker from "../ProductPicker/index.js"
 import MovableList from "../MovableList/index.js"
 import { arrayMove } from "react-movable"
 import { listReducer } from "./reducer.js"
 import Button from "../Button.js"
 import { EMPTY_PRODUCT } from "../helper.js"
+import * as actions from "./actions"
+import "./styles.css"
 
 const ProductList = () => {
-  const [showModal, setShowModal] = useState(false)
   const [productList, dispatch] = useReducer(listReducer, [EMPTY_PRODUCT])
+  const [showModal, setShowModal] = useState(false)
   const [container, setContainer] = useState(null)
-
   const wrapperRef = useRef(null)
   const rowIndexEdited = useRef(null)
 
@@ -23,7 +22,7 @@ const ProductList = () => {
 
   const handleAddProducts = (selectedProducts) => {
     dispatch({
-      type: "PRODUCTS/ADD",
+      type: actions.PRODUCTS_ADD,
       payload: { products: selectedProducts, index: rowIndexEdited.current },
     })
   }
@@ -31,19 +30,18 @@ const ProductList = () => {
   const handleMovedRow = ({ oldIndex, newIndex }) => {
     const newOrder = arrayMove(productList, oldIndex, newIndex)
     dispatch({
-      type: "PRODUCTS/REORDER",
+      type: actions.PRODUCTS_REORDER,
       payload: { products: newOrder },
     })
   }
 
   const renderRow = (product, index) => {
-    console.log("row rendered")
     return (
       <Row
         dispatch={dispatch}
         product={product}
+        removable={productList.length > 1}
         openModal={() => {
-          console.log(index, "index")
           rowIndexEdited.current = index
           openModal()
         }}
@@ -51,10 +49,6 @@ const ProductList = () => {
       />
     )
   }
-
-  useEffect(() => {
-    console.log(productList, "products list")
-  }, [productList])
 
   useEffect(() => setContainer(wrapperRef.current), [])
 
@@ -82,16 +76,13 @@ const ProductList = () => {
           <ProductPicker onClose={closeModal} onAdd={handleAddProducts} />
         </Modal>
       ) : null}
-      <div
-        className="mt-2"
-        style={{ display: "flex", justifyContent: "center" }}
-      >
+      <div className="mt-2 add-products-row">
         <Button
           type="secondary"
           text="Add Product"
-          style={{ padding: "10px 40px" }}
+          className="add-products-button"
           onClick={() => {
-            handleAddProducts([EMPTY_PRODUCT])
+            handleAddProducts([{ id: `${new Date()}`, variants: [] }])
           }}
         />
       </div>

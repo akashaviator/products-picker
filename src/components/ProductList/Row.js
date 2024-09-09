@@ -5,6 +5,7 @@ import { PRIMARY_COLOR } from "../helper.js"
 import VariantList from "./VariantList.js"
 import { arrayMove } from "react-movable"
 import Button from "../Button.js"
+import * as actions from "./actions.js"
 
 const DISCOUNT_OPTIONS = [
   { value: "flat", label: "flat off" },
@@ -25,6 +26,7 @@ const customStyles = {
     width: "110px",
   }),
 }
+
 const Row = (props) => {
   const {
     removable = true,
@@ -40,9 +42,22 @@ const Row = (props) => {
   const handleMovedVariant = ({ oldIndex, newIndex }) => {
     const newOrder = arrayMove(product.variants, oldIndex, newIndex)
     dispatch({
-      type: "VARIANTS/REORDER",
+      type: actions.VARIANTS_REORDER,
       payload: { index, variants: newOrder },
     })
+  }
+
+  const handleDelete = () => {
+    let type, payload
+    if (product) {
+      type = actions.PRODUCT_DELETE
+      payload = { productId: product.id }
+    } else {
+      type = actions.VARIANT_DELETE
+      payload = { variantId: variant.id, productId: variant.product_id }
+    }
+
+    dispatch({ type, payload })
   }
 
   return (
@@ -88,7 +103,10 @@ const Row = (props) => {
           )}
 
           {removable ? (
-            <RiCloseLine className="cursor-pointer close-btn" />
+            <RiCloseLine
+              className="cursor-pointer close-btn"
+              onClick={handleDelete}
+            />
           ) : null}
         </div>
       </div>
@@ -97,6 +115,7 @@ const Row = (props) => {
         <VariantList
           variants={product.variants}
           handleMovedVariant={handleMovedVariant}
+          dispatch={dispatch}
         />
       ) : null}
     </div>

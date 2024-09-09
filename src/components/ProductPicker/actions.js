@@ -1,0 +1,4 @@
+export const VARIANT_REMOVE = "VARIANT/REMOVE"
+export const VARIANT_ADD = "VARIANT/ADD"
+export const PRODUCT_REMOVE = "PRODUCT/REMOVE"
+export const PRODUCT_ADD = "PRODUCT/ADD"

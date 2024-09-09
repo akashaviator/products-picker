@@ -1,7 +1,7 @@
 import axios from "axios"
 
 export const PRIMARY_COLOR = "#007555"
-export const placeholderImgUrl =
+export const IMG_URL =
   "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/681px-Placeholder_view_vector.svg.png"
 
 export const fetchProductsAPI = (page = 1, search, limit = 10) => {

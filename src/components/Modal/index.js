@@ -1,8 +1,6 @@
 import React from "react"
 import "./styles.css"
-import "../../App.css"
-import { RiCloseLine, RiSearchLine } from "@remixicon/react"
-import ProductPicker from "../ProductPicker.js"
+import { RiCloseLine } from "@remixicon/react"
 
 const Modal = ({ children, onClose }) => {
   return (

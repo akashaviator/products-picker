@@ -1,4 +1,6 @@
 import _ from "underscore"
+import { EMPTY_PRODUCT } from "../helper"
+import * as actions from "./actions"
 
 const mergeVariants = (arr1, arr2) => {
   const map = new Map()
@@ -10,19 +12,20 @@ const mergeVariants = (arr1, arr2) => {
 }
 
 export const listReducer = (state, action) => {
-  const { removedVariant, removedProduct, variants, products, index } =
-    action.payload
-  console.log(index, "index")
+  const { variants, products, index } = action.payload
+  let productsPresent
   let newState = null
-  const isStateEmpty = _.isNull(index)
-  const addEmptyProduct = _.isEmpty(products[0].variants)
+
   switch (action.type) {
-    case "PRODUCTS/ADD":
+    case actions.PRODUCTS_ADD:
+      const addEmptyProduct = _.isEmpty(products[0].variants)
+      const isStateEmpty = _.isNull(index)
+
       if (isStateEmpty || addEmptyProduct) {
         newState = [...state, ...products]
       } else {
         let productsToAdd = []
-        const productsPresent = [...state]
+        productsPresent = [...state]
         for (const selectedProduct of products) {
           const productPresentIndex = _.findIndex(
             productsPresent,
@@ -37,7 +40,6 @@ export const listReducer = (state, action) => {
             selectedProduct.variants = mergedVariants
 
             productsPresent.splice(productPresentIndex, 1, selectedProduct)
-            // productsToAdd.push(product)
           } else {
             productsToAdd.push(selectedProduct)
           }
@@ -45,7 +47,6 @@ export const listReducer = (state, action) => {
         if (productsPresent.length === index) {
           newState = productsPresent.concat(productsToAdd)
         } else {
-          console.log("putting in", productsPresent[index])
           const isEmptyProduct = _.isEmpty(productsPresent[index].variants)
           productsPresent.splice(
             index,
@@ -56,20 +57,40 @@ export const listReducer = (state, action) => {
         }
       }
       break
-    case "PRODUCT/REMOVE":
+    case actions.PRODUCT_DELETE:
+      newState = _.filter(state, (item) => item.id !== action.payload.productId)
+      if (_.isEmpty(newState)) {
+        newState = [EMPTY_PRODUCT]
+      }
       break
-    case "VARIANT/REMOVE":
+    case actions.VARIANT_DELETE:
+      const { productId, variantId } = action.payload
+      productsPresent = [...state]
+      const productIndex = _.findIndex(
+        productsPresent,
+        (item) => item.id === productId
+      )
+      const newVariants = _.filter(
+        productsPresent[productIndex].variants,
+        (item) => item.id !== variantId
+      )
+      if (_.isEmpty(newVariants)) {
+        productsPresent.splice(productIndex, 1)
+      } else {
+        productsPresent[productIndex].variants = newVariants
+      }
+      newState = productsPresent
       break
-    case "PRODUCTS/REORDER":
-      newState = products
-      break
-    case "VARIANTS/REORDER":
-      const productsPresent = [...state]
+    case actions.VARIANTS_REORDER:
+      productsPresent = [...state]
       productsPresent[index].variants = variants
       newState = productsPresent
       break
+    case actions.PRODUCTS_REORDER:
+      newState = [...products]
+      break
     default:
-      return newState
+      return state
   }
 
   return newState

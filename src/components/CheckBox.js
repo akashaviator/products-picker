@@ -3,7 +3,7 @@ import {
   RiCheckboxFill,
   RiCheckboxIndeterminateFill,
 } from "@remixicon/react"
-import React, { useEffect, useState } from "react"
+import React from "react"
 
 const CheckBox = (props) => {
   const { isChecked, color, size, partialSelected, className = "" } = props

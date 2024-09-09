@@ -2,15 +2,20 @@ import React, { useEffect, useRef, useState } from "react"
 import Row from "./Row"
 import { RiArrowDownSLine, RiArrowUpSLine } from "@remixicon/react"
 import MovableList from "../MovableList"
-import _ from "underscore"
 
 const VariantList = (props) => {
-  const { variants, handleMovedVariant } = props
-  const [showVarients, setShowVariants] = useState(false)
+  const { variants, handleMovedVariant, dispatch } = props
+  const [showVarients, setShowVariants] = useState(variants.length === 1)
   const [container, setContainer] = useState(null)
   const wrapperRef = useRef(null)
 
-  const renderVariant = (variant) => <Row variant={variant} />
+  const renderVariant = (variant) => (
+    <Row
+      variant={variant}
+      dispatch={dispatch}
+      removable={variants.length > 1}
+    />
+  )
 
   useEffect(() => setContainer(wrapperRef.current), [])
 

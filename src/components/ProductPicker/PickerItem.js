@@ -1,10 +1,9 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react"
-import "./styles.css"
-import "../../App.css"
+import React, { useCallback, useMemo, useState } from "react"
 import CheckBox from "../CheckBox"
-import { placeholderImgUrl, PRIMARY_COLOR } from "../helper"
+import { IMG_URL, PRIMARY_COLOR } from "../helper"
 import VariantRow from "./VariantRow"
 import _ from "underscore"
+import * as actions from "./actions"
 
 const PickerItem = (props) => {
   const { product, dispatch, selectedState } = props
@@ -33,40 +32,26 @@ const PickerItem = (props) => {
     return allSelected
   }, [selectedState])
 
-  // useEffect(() => {
-  //   const selected = _.find(
-  //     selectedState,
-  //     (selectedProduct) => selectedProduct.id === product.id
-  //   )
-  //   let status = false
-  //   if (selected) {
-  //     const allSelected = selected.variants.length === product.variants.length
-  //     if (allSelected) status = true
-  //   } else {
-  //     // status = false
-  //   }
-  //   setChecked(status)
-  // }, [selectedState])
   const isDisabled = useMemo(
     () => _.some(product.variants, (variant) => !variant.inventory_quantity),
     []
   )
 
   const addVariant = useCallback((variant) => {
-    dispatch({ type: "VARIANT/ADD", payload: { variant, product } })
+    dispatch({ type: actions.VARIANT_ADD, payload: { variant, product } })
   }, [])
 
   const removeVariant = useCallback((variant) => {
-    dispatch({ type: "VARIANT/REMOVE", payload: { variant, product } })
+    dispatch({ type: actions.VARIANT_REMOVE, payload: { variant, product } })
   }, [])
 
   const addProduct = useCallback(() => {
-    dispatch({ type: "PRODUCT/ADD", payload: { product } })
+    dispatch({ type: actions.PRODUCT_ADD, payload: { product } })
     setChecked(true)
   }, [])
 
   const removeProduct = useCallback(() => {
-    dispatch({ type: "PRODUCT/REMOVE", payload: { product } })
+    dispatch({ type: actions.PRODUCT_REMOVE, payload: { product } })
     setChecked(false)
   }, [])
 
@@ -89,7 +74,7 @@ const PickerItem = (props) => {
         />
         <img
           className="item__thumbnail ml-1 mr-1"
-          src={product.image.src || placeholderImgUrl}
+          src={product.image.src || IMG_URL}
           alt="Product"
         />
         <div className="product__row">

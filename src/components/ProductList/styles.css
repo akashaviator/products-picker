@@ -25,6 +25,7 @@
   display: flex;
   padding: 10px;
   align-items: center;
+  width: fit-content;
 }
 .list-row .details {
   display: flex;
@@ -123,7 +124,7 @@
 .button__row {
   display: flex;
   justify-content: flex-end;
-  margin-right: 91px;
+  margin-right: 11px;
 }
 .variants__list {
   margin-left: 45px;
@@ -132,4 +133,14 @@
   border-bottom: 1px solid #0000001a;
   padding-bottom: 15px;
   margin-bottom: 15px;
+  width: fit-content;
+}
+.add-products-button {
+  padding: 10px 40px;
+  margin-right: 110px;
+}
+.add-products-row {
+  display: flex;
+  justify-content: flex-end;
+  width: 80%;
 }

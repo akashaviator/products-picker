@@ -11,14 +11,13 @@ const MovableList = (props) => {
       values={values}
       onChange={onChange}
       renderList={({ children, props }) => <ul {...props}>{children}</ul>}
-      renderItem={({ value, props, isDragged, isSelected, index }) => {
+      renderItem={({ value, props, isDragged, index }) => {
         const { key, ...rest } = props
         return (
           <MovableListItem
             key={key}
             value={value}
             isDragged={isDragged}
-            isSelected={isSelected}
             renderItem={renderItem}
             index={index}
             {...rest}

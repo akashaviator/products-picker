@@ -1,5 +1,4 @@
 import "./styles.css"
-import "../../App.css"
 import React, { useState, useEffect, useRef, useReducer, useMemo } from "react"
 import { RiLoader4Line, RiSearchLine } from "@remixicon/react"
 import _ from "underscore"
@@ -55,12 +54,12 @@ const ProductPicker = (props) => {
         if (onFinally) onFinally()
       })
   }
+
   useEffect(() => {
     const debounceId = setTimeout(() => {
       const firstPage = 1
 
       if (!_.isNull(search)) {
-        console.log("running search")
         setIsLoading(true)
         setEndOfResult(false)
         fetchProducts(
@@ -81,7 +80,6 @@ const ProductPicker = (props) => {
   }, [search])
 
   useEffect(() => {
-    console.log("running normal api")
     fetchProducts(page, search, (res) => {
       if (res) {
         setProducts((prevData) => [...prevData, ...res])
