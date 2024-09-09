@@ -8,6 +8,7 @@ import { pickerReducer } from "./reducer"
 import { fetchProductsAPI, PRIMARY_COLOR } from "../helper"
 import Loader from "../Loader"
 import Button from "../Button"
+import SearchBox from "./SearchBox"
 
 const ProductPicker = (props) => {
   const { onClose, onAdd } = props
@@ -100,16 +101,7 @@ const ProductPicker = (props) => {
 
   return (
     <React.Fragment>
-      <div className="search__row">
-        <div className="search__input">
-          <input
-            placeholder="Search Product"
-            value={search || ""}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-          <RiSearchLine size={20} className="search-icon" />
-        </div>
-      </div>
+      <SearchBox search={search} setSearch={setSearch} />
       <div ref={containerRef} className="picker-list custom-scrollbar font14">
         {error || (isLoading && <Loader />) || (
           <ul>

@@ -14,7 +14,7 @@ export const fetchProductsAPI = (page = 1, search, limit = 10) => {
         {
           headers: {
             "Content-Type": "application/json",
-            "x-api-key": "72njgfa948d9aS7gs5",
+            "x-api-key": process.env.REACT_APP_API_KEY,
           },
         }
       )
